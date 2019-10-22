@@ -18,7 +18,7 @@ headers = {
 
 def get_city_list():
     """
-    获取城市编码，运行并将结果存储在config.py文件中
+    获取城市编码，运行并将结果存储在config.py文件中(一次性)
     :return:
     """
     city = {}
@@ -34,6 +34,13 @@ def get_city_list():
 
 
 def get_info(city, key, page=1):
+    """
+    请求数据并存储
+    :param city:  城市名--> str
+    :param key: 职位关键词 --> str
+    :param page: 页码 -->int（默认）
+    :return: None
+    """
     url = "https://m.51job.com/search/joblist.php?jobarea={}&keyword={}&keywordtype=2&pageno={}".format(city, key, page)
     response = requests.get(url, headers=headers)
     response.encoding = "utf-8"
@@ -51,6 +58,11 @@ def get_info(city, key, page=1):
 
 
 def get_detail(url):
+    """
+    获取职位列表的学历已经经验字段
+    :param url: 职位详细地址
+    :return: 职位、经验字段数据
+    """
     response = requests.get(url, headers=headers)
     response.encoding = "utf-8"
     h = etree.HTML(response.text)
